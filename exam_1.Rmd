@@ -1,0 +1,52 @@
+---
+title: "Practice Exam 1"
+author: "Buddy Scott"
+date: "10/6/2020"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(readr)
+library(tidyverse)
+library(ggplot2)
+```
+
+```{r}
+colleges <- read_csv("raw_data/college_scorecard.csv", 
+                    col_type = cols(name = col_character(), 
+                                    state = col_character(), 
+                                    region = col_character(), 
+                                    campuses = col_number(), 
+                                    id_long = col_number(), 
+                                    id = col_number(), 
+                                    locale = col_character(), 
+                                    ug_enrollment = col_number(), 
+                                    main_campus = col_number(), 
+                                    hbcu = col_number(), 
+                                    women_only = col_number(), 
+                                    religious_affiliation = col_number(), 
+                                    admission_rate = col_number(), 
+                                    social_sciences = col_number(), 
+                                    physical_sciences = col_number(), 
+                                    ethnic_gender_studies = col_number(), 
+                                    comp_sci = col_number(), 
+                                    avg_faculty_salary = col_number(), 
+                                    completion_rate = col_number(), 
+                                    pell_grant = col_number(), 
+                                    first_gen_completion_4 = col_number()))
+  
+```
+
+```{r q1}
+q1 <- colleges %>%
+  filter(state == "NJ") %>%
+  select(name, pell_grant) %>%
+  arrange(desc(pell_grant)) %>%
+  slice(1:10)
+```
+
+```{r}
+
+```
+
