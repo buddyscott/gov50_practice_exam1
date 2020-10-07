@@ -59,7 +59,8 @@ regional_religion %>%
 ```
 
 ```{r q4}
-
+colleges %>%
+  
 ```
 
 ```{r q5}
