@@ -14,29 +14,19 @@ library(ggplot2)
 
 ```{r}
 colleges <- read_csv("raw_data/college_scorecard.csv", 
-                    col_type = cols(name = col_character(), 
+                    col_type = cols(.default = col_double(),
+                                    name = col_character(), 
                                     state = col_character(), 
                                     region = col_character(), 
-                                    campuses = col_number(), 
-                                    id_long = col_number(), 
-                                    id = col_number(), 
+                                    id_long = col_character(), 
+                                    id = col_character(), 
                                     locale = col_character(), 
-                                    ug_enrollment = col_number(), 
-                                    main_campus = col_number(), 
-                                    hbcu = col_number(), 
-                                    women_only = col_number(), 
-                                    religious_affiliation = col_number(), 
-                                    admission_rate = col_number(), 
-                                    social_sciences = col_number(), 
-                                    physical_sciences = col_number(), 
-                                    ethnic_gender_studies = col_number(), 
-                                    comp_sci = col_number(), 
-                                    avg_faculty_salary = col_number(), 
-                                    completion_rate = col_number(), 
-                                    pell_grant = col_number(), 
-                                    first_gen_completion_4 = col_number()))
-  
+                                    ug_enrollment = col_character(), 
+                                    completion_rate = col_character()
+                    )
+)
 ```
+
 
 ```{r q1}
 q1 <- colleges %>%
@@ -46,7 +36,41 @@ q1 <- colleges %>%
   slice(1:10)
 ```
 
-```{r}
+```{r q2}
+regional_religion <- colleges %>%
+  group_by(region) %>%
+  summarize(religious_num = sum(religious_affiliation, na.rm = TRUE),
+            religious_prop = religious_num / n(),
+            .groups = "drop")
+```
+
+```{r q3}
+regional_religion %>%
+  filter(region != "US Service Schools") %>% 
+  ggplot(aes(x = fct_reorder(region, religious_prop), y = religious_prop)) + 
+    geom_col(fill = "#69A297") + 
+    coord_flip() + 
+    theme_bw() + 
+    labs(title = "Proportion of Colleges in Each \n US Region with a Religious Affiliation",
+         x = "Region",
+         y = "Religious Proportion") + 
+  scale_y_continuous(breaks = c(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+                     labels = c("0%", "10%", "20%", "30%", "40%", "50%"))
+```
+
+```{r q4}
+
+```
+
+```{r q5}
+
+```
+
+```{r q6}
+
+```
+
+```{r q7}
 
 ```
 
