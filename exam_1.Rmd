@@ -10,6 +10,7 @@ knitr::opts_chunk$set(echo = FALSE)
 library(readr)
 library(tidyverse)
 library(ggplot2)
+library(fec16)
 ```
 
 ```{r}
@@ -59,12 +60,24 @@ regional_religion %>%
 ```
 
 ```{r q4}
-colleges %>%
+q4 <- colleges %>%
+  mutate(id_replicate = str_sub(id, 1, 4)) %>%
+  select(id, id_replicate, id_long)
   
 ```
 
 ```{r q5}
+avg_results <- results_house %>%
+  filter(party == "D") %>%
+  group_by(state) %>%
+  summarize(avg_results = mean(general_percent, na.rm = TRUE), .groups = "drop")
 
+avg_pell <- colleges %>%
+  filter(state != c("GU", "VI")) %>%
+  group_by(state) %>%
+  summarize(avg_pell = mean(pell_grant, na.rm = TRUE), .groups = "drop")
+
+q5 <- inner_join(avg_results, avg_pell, by = "state")
 ```
 
 ```{r q6}
